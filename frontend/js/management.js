@@ -1,8 +1,5 @@
-/* script.js */
-
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Core Memory Architecture Data Pipeline - Initialized Empty ---
     let maintenanceRequests = [];
 
     let activeDeletionTargetId = null;
@@ -10,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const PRIORITY_WEIGHTS = { 'Critical': 4, 'High': 3, 'Medium': 2, 'Low': 1 };
 
-    // --- DOM Elements Cache Engine ---
     const searchInput = document.getElementById('search-input');
     const filterPriority = document.getElementById('filter-priority');
     const sortSelect = document.getElementById('sort-select');
@@ -31,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCancelForm = document.getElementById('btn-cancel-form');
     const toastNotification = document.getElementById('toast-notification');
 
-    // Modals References
     const viewModal = document.getElementById('view-modal');
     const btnCloseView = document.getElementById('btn-close-view');
     const techModal = document.getElementById('tech-modal');
@@ -42,26 +37,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnDeleteYes = document.getElementById('btn-delete-yes');
     const btnDeleteNo = document.getElementById('btn-delete-no');
 
-    // --- Application Initialization Module ---
-    function initializeApplication() {
+    async function initializeApplication() {
+        try {
+            const responseData = await window.AssetFlowAPI.listMaintenanceRequests();
+            maintenanceRequests = responseData.map(req => ({
+                id: req.id,
+                assetId: String(req.asset_id),
+                assetName: req.asset_name || "Unknown Asset",
+                issueTitle: req.issue_title,
+                issueDesc: req.issue_description,
+                priority: req.priority || "Medium",
+                status: req.status || "Pending",
+                technician: req.assigned_technician || "",
+                requestedBy: req.requested_by || "System",
+                createdDate: req.created_date,
+                timestamp: Date.now()
+            }));
+        } catch (err) {
+            console.error("Failed to parse Kanban cards from database:", err);
+            maintenanceRequests = [];
+        }
         renderKanbanWorkspace();
         setupGlobalActionsRegistry();
     }
 
-    // --- Kanban Layout Rendering Framework Engine ---
     function renderKanbanWorkspace() {
         const columns = ['Pending', 'Approved', 'Technician Assigned', 'In Progress', 'Resolved'];
         
-        // 1. Reset each column storage baseline arrays configuration state metrics mapping
         columns.forEach(status => {
             const container = document.getElementById(`container-${status}`);
             if (container) container.innerHTML = '';
         });
 
-        // 2. Filter & Sort Memory State Extraction Core Arrays Calculations
         let processedData = [...maintenanceRequests];
 
-        // Search Verification Rule Evaluation
         const searchQuery = searchInput.value.trim().toLowerCase();
         if (searchQuery) {
             processedData = processedData.filter(req => 
@@ -71,13 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
-        // Priority Filtration Extraction Evaluation Rule
         const priorityFilter = filterPriority.value;
         if (priorityFilter !== 'All') {
             processedData = processedData.filter(req => req.priority === priorityFilter);
         }
 
-        // Chronological Metric Array Sorting Execution Logic Maps
         const activeSort = sortSelect.value;
         if (activeSort === 'newest') {
             processedData.sort((a, b) => b.timestamp - a.timestamp);
@@ -87,10 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
             processedData.sort((a, b) => PRIORITY_WEIGHTS[b.priority] - PRIORITY_WEIGHTS[a.priority]);
         }
 
-        // 3. Counter Initialization Map Registry Setup Loop
         const statusCounts = { 'Pending': 0, 'Approved': 0, 'Technician Assigned': 0, 'In Progress': 0, 'Resolved': 0 };
 
-        // 4. Dom Fragment Assembly Pipeline Iteration Framework Loop
         processedData.forEach(request => {
             statusCounts[request.status]++;
             const targetContainer = document.getElementById(`container-${request.status}`);
@@ -100,12 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 5. Update Column Status Header Metrics Indicators Value Trackers
         columns.forEach(status => {
             const countLabel = document.getElementById(`count-${status}`);
             if (countLabel) countLabel.textContent = statusCounts[status];
 
-            // Render visual fallback empty notice panel elements safely if no entries pass constraints
             const activeContainer = document.getElementById(`container-${status}`);
             if (activeContainer && activeContainer.children.length === 0) {
                 activeContainer.innerHTML = `
@@ -124,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
             card.classList.add('resolved-card-theme');
         }
 
-        // Generate contextual tag info strings values mappings
         let inlineInfoMeta = '';
         if (request.status === 'Technician Assigned' && request.technician) {
             inlineInfoMeta = `<div class="card-info-pane"><span class="tech-tag-lbl">Technician:</span> ${escapeHtml(request.technician)}</div>`;
@@ -162,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Safe closure action registration mapping assignments binding triggers
         card.querySelector('.btn-view-trigger').addEventListener('click', () => triggerViewModal(request.id));
         card.querySelector('.btn-edit-trigger').addEventListener('click', () => openMaintenanceForm(request.id));
         card.querySelector('.btn-delete-trigger').addEventListener('click', () => initiateDeleteSequence(request.id));
@@ -174,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    // --- State Transaction Pipelines Management Handlers ---
     function openMaintenanceForm(editId = null) {
         formErrorBanner.classList.add('hidden');
         formErrorBanner.textContent = '';
@@ -218,15 +218,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const priority = prioritySelect.value;
         const requestedBy = requestedByInput.value.trim();
 
-        // Structural Parameter Validation Engine Rules
         if (!assetId || !assetName || !issueTitle || !issueDesc || !requestedBy) {
-            formErrorBanner.textContent = 'Validation Failed: Please fill out all mandatory request input parameters fields.';
+            formErrorBanner.textContent = 'Validation Failed: Please fill out all mandatory fields.';
             formErrorBanner.classList.remove('hidden');
             return;
         }
 
         if (targetId) {
-            // Memory Array Data Record Updates Transaction Mutation
             const existingRecord = maintenanceRequests.find(r => r.id === targetId);
             if (existingRecord) {
                 existingRecord.assetId = assetId;
@@ -239,7 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 triggerToastAlert('Maintenance request updated successfully.');
             }
         } else {
-            // New Record Insertion Pipeline Execution Transaction Mode
             const newRequest = {
                 id: 'req_' + Date.now() + Math.random().toString(36).substr(2, 4),
                 assetId: assetId,
@@ -255,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 timestamp: Date.now()
             };
             maintenanceRequests.push(newRequest);
-            triggerToastAlert('New maintenance request added to Pending successfully.');
+            triggerToastAlert('New maintenance request added successfully.');
         }
 
         renderKanbanWorkspace();
@@ -267,14 +264,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!targetRequest) return;
 
         if (destinationStatus === 'Technician Assigned' && !targetRequest.technician) {
-            // Intermediate state handler capture interceptor rule for sub-dialog modal validation trigger mapping
             pendingTechMoveContext = { id: id, targetStatus: destinationStatus };
             techSelect.selectedIndex = 0;
             techModal.classList.remove('hidden');
             return;
         }
 
-        // Apply final metrics changes dynamically if moving into final baseline resolution metrics states rules
         if (destinationStatus === 'Resolved') {
             targetRequest.resolvedDate = formatSystemDisplayDate(new Date());
         } else {
@@ -329,7 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerToastAlert('Maintenance request removed successfully.');
     }
 
-    // --- Declarative Framework Utility Helpers ---
     function triggerToastAlert(msg) {
         toastNotification.textContent = msg;
         toastNotification.classList.remove('hidden');
@@ -342,8 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function formatSystemDisplayDate(dateObj) {
         const day = dateObj.getDate();
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const month = months[dateObj.getMonth()];
-        return `${day} ${month}`;
+        return `${day} ${months[dateObj.getMonth()]}`;
     }
 
     function escapeHtml(str) {
@@ -352,27 +345,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return div.innerHTML;
     }
 
-    // --- Declarative Event Infrastructure Wiring Registry Mapping Layer ---
     function setupGlobalActionsRegistry() {
-        
-        // Toolbar Stream Interceptors Filter Event Registry Listeners Mapping Rules
         searchInput.addEventListener('input', renderKanbanWorkspace);
         filterPriority.addEventListener('change', renderKanbanWorkspace);
         sortSelect.addEventListener('change', renderKanbanWorkspace);
 
-        // Standard Panels Visibility Toggling Interface Bindings Elements
         btnOpenForm.addEventListener('click', () => openMaintenanceForm());
         btnCancelForm.addEventListener('click', closeMaintenanceForm);
         maintenanceForm.addEventListener('submit', handleFormSubmission);
-
-        // Core General Modal View Controls Closures Triggers Mappings Interceptors
         btnCloseView.addEventListener('click', () => viewModal.classList.add('hidden'));
 
-        // Technicians Processing Sub-Modal Interceptor Workflow Buttons Mapping Elements Actions
         btnCancelTech.addEventListener('click', () => {
             pendingTechMoveContext = null;
             techModal.classList.add('hidden');
-            renderKanbanWorkspace(); // Redraw system board state metrics layout map boundary
+            renderKanbanWorkspace();
         });
 
         btnConfirmTech.addEventListener('click', () => {
@@ -388,7 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
             renderKanbanWorkspace();
         });
 
-        // Global Deletion Destruction Validation Confirmation Action Triggers Interceptors
         btnDeleteNo.addEventListener('click', () => {
             activeDeletionTargetId = null;
             deleteModal.classList.add('hidden');
@@ -397,6 +382,5 @@ document.addEventListener('DOMContentLoaded', () => {
         btnDeleteYes.addEventListener('click', executeDeletionTransaction);
     }
 
-    // Execute application routine baseline setup operations loops
     initializeApplication();
 });

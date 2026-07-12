@@ -1,12 +1,17 @@
-from flask import Blueprint, request, jsonify
-from model import db, Asset, ResourceBooking, Employee, Department, MaintenanceRequest, AssetCategory, AuditCycle, AuditItem  
+from flask import Blueprint, request, jsonify, session
+from model import db, Asset, ResourceBooking, Employee, Department, MaintenanceRequest, AssetCategory, AuditCycle, AuditItem, Notification
 from datetime import datetime
 
 core_bp = Blueprint('core', __name__)
 
-# ----------------- MOCK USER LAYER -----------------
+# ----------------- SESSION IDENTITY LAYER -----------------
 def get_current_user():
-    return {"id": "mock-admin-id", "role": "ADMIN"}
+    user_id = session.get('user_id')
+    user_role = session.get('user_role')
+    
+    if not user_id:
+        return {"id": None, "role": "GUEST"}
+    return {"id": user_id, "role": user_role}
 
 # ----------------- ASSET DIRECTORY & REGISTRATION (Screen 4) -----------------
 @core_bp.route('/assets', methods=['POST'])
@@ -82,7 +87,7 @@ def allocate_asset(asset_id):
             "message": f"Asset is currently held by {holder_name}. Please submit a Transfer Request instead."
         }), 409
 
-    asset.status = 'Allocated'[cite: 1]
+    asset.status = 'Allocated'
     asset.current_holder_id = employee_id
     db.session.commit()
     
@@ -95,7 +100,7 @@ def return_asset(asset_id):
     if asset.status != 'Allocated':
         return jsonify({"error": "Asset is not currently allocated."}), 400
         
-    asset.status = 'Available'[cite: 1]
+    asset.status = 'Available'
     asset.current_holder_id = None
     db.session.commit()
     
@@ -149,40 +154,74 @@ def get_employee_directory():
         })
     return jsonify(output), 200
 
-# ----------------- MAINTENANCE MANAGEMENT (Screen 7) -----------------
+# ----------------- ADVANCED KANBAN MAINTENANCE ENGINE (management.html) -----------------
+@core_bp.route('/maintenance', methods=['GET'])
+def get_all_maintenance_requests():
+    requests_list = MaintenanceRequest.query.all()
+    output = []
+    for req in requests_list:
+        output.append({
+            "id": req.id,
+            "asset_id": req.asset_id,
+            "asset_name": req.asset_name,
+            "issue_title": req.issue_title,
+            "issue_description": req.issue_description,
+            "priority": req.priority,
+            "status": req.status,
+            "assigned_technician": req.assigned_technician,
+            "requested_by": req.requested_by,
+            "created_date": req.created_at.strftime('%Y-%m-%d')
+        })
+    return jsonify(output), 200
+
 @core_bp.route('/maintenance', methods=['POST'])
-def raise_maintenance():
+def create_kanban_maintenance():
     data = request.json
-    asset_id = data['asset_id']
-    
-    asset = Asset.query.get_or_404(asset_id)
     
     new_request = MaintenanceRequest(
-        asset_id=asset_id,
-        issue_description=data['issue_description'],
-        priority=data.get('priority', 'Medium')
+        asset_id=data.get('asset-id') or data.get('asset_id'),
+        asset_name=data.get('asset-name') or data.get('asset_name'),
+        issue_title=data.get('issue-title') or data.get('issue_title'),
+        issue_description=data.get('issue-desc') or data.get('issue_description'),
+        priority=data.get('priority-select') or data.get('priority', 'Medium'),
+        requested_by=data.get('requested-by') or data.get('requested_by'),
+        status='Pending'
     )
     db.session.add(new_request)
     db.session.commit()
-    return jsonify({"message": "Maintenance request raised successfully.", "id": new_request.id}), 201
+    return jsonify({"message": "Kanban maintenance item registered successfully.", "id": new_request.id}), 201
 
-@core_bp.route('/maintenance/<request_id>/approve', methods=['POST'])
-def approve_maintenance(request_id):
-    req_maintenance = MaintenanceRequest.query.get_or_404(request_id)
-    req_maintenance.status = 'Approved'[cite: 1]
+@core_bp.route('/maintenance/<request_id>/assign-technician', methods=['POST'])
+def assign_technician(request_id):
+    data = request.json
+    req = MaintenanceRequest.query.get_or_404(request_id)
     
-    asset = Asset.query.get(req_maintenance.asset_id)
-    if asset:
-        asset.status = 'Under Maintenance'[cite: 1]
-        
+    req.assigned_technician = data.get('technician')
+    req.status = 'Technician Assigned'
     db.session.commit()
-    return jsonify({"message": "Maintenance approved. Asset status updated to Under Maintenance."}), 200
+    return jsonify({"message": "Technician assigned and card moved successfully."}), 200
+
+@core_bp.route('/maintenance/<request_id>/status', methods=['PATCH'])
+def update_kanban_status(request_id):
+    data = request.json
+    next_status = data.get('status')
+    
+    req = MaintenanceRequest.query.get_or_404(request_id)
+    req.status = next_status
+    
+    if next_status == 'Resolved':
+        asset = Asset.query.get(req.asset_id)
+        if asset:
+            asset.status = 'Available'
+            
+    db.session.commit()
+    return jsonify({"message": f"Workflow advanced to status: {next_status}"}), 200
 
 # ----------------- ORG SETUP: DEPARTMENTS & CATEGORIES (Screen 3) -----------------
 @core_bp.route('/departments', methods=['POST'])
 def create_department():
     data = request.json
-    new_dept = Department(name=data['name'], status='Active')[cite: 1]
+    new_dept = Department(name=data['name'], status='Active')
     db.session.add(new_dept)
     db.session.commit()
     return jsonify({"message": "Department created successfully", "id": new_dept.id}), 201
@@ -204,13 +243,13 @@ def get_categories():
 @core_bp.route('/audits', methods=['POST'])
 def start_audit_cycle():
     data = request.json
-    new_cycle = AuditCycle(name=data['name'])[cite: 1]
+    new_cycle = AuditCycle(name=data['name'])
     db.session.add(new_cycle)
     db.session.flush()
     
     all_assets = Asset.query.filter(Asset.status.in_(['Available', 'Allocated'])).all()
     for asset in all_assets:
-        item = AuditItem(audit_cycle_id=new_cycle.id, asset_id=asset.id, verification_status='Pending')[cite: 1]
+        item = AuditItem(audit_cycle_id=new_cycle.id, asset_id=asset.id, verification_status='Pending')
         db.session.add(item)
         
     db.session.commit()
@@ -223,27 +262,54 @@ def verify_audit_item(cycle_id):
     status_v = data['status']
     
     item = AuditItem.query.filter_by(audit_cycle_id=cycle_id, asset_id=asset_id).first_or_404()
-    item.verification_status = status_v[cite: 1]
+    item.verification_status = status_v
     item.notes = data.get('notes', '')
     
     if status_v == 'Missing':
         asset = Asset.query.get(asset_id)
         if asset:
-            asset.status = 'Lost'[cite: 1]
+            asset.status = 'Lost'
             
     db.session.commit()
     return jsonify({"message": "Asset verification recorded successfully."}), 200
 
+# ----------------- NOTIFICATIONS ENGINE (activityLogs.html) -----------------
+@core_bp.route('/notifications', methods=['GET'])
+def get_notifications():
+    notifications = Notification.query.order_by(Notification.timestamp.desc()).all()
+    output = []
+    for n in notifications:
+        output.append({
+            "id": n.id,
+            "type": n.type,
+            "message": n.message,
+            "time": n.time_label,
+            "status": n.status
+        })
+    return jsonify(output), 200
+
+@core_bp.route('/notifications', methods=['POST'])
+def create_notification():
+    data = request.json
+    new_notif = Notification(
+        type=data['type'],
+        message=data['message'],
+        time_label=data.get('time', 'Just now'),
+        status=data.get('status', 'Unread')
+    )
+    db.session.add(new_notif)
+    db.session.commit()
+    return jsonify({"message": "Notification created successfully", "id": new_notif.id}), 201
+
 # ----------------- KPI DASHBOARD & REPORT ANALYTICS (Screen 2 & 9) -----------------
 @core_bp.route('/dashboard/kpis', methods=['GET'])
 def get_dashboard_kpis():
-    total_available = Asset.query.filter_by(status='Available').count()[cite: 1]
-    total_allocated = Asset.query.filter_by(status='Allocated').count()[cite: 1]
-    total_maintenance = Asset.query.filter_by(status='Under Maintenance').count()[cite: 1]
+    total_available = Asset.query.filter_by(status='Available').count()
+    total_allocated = Asset.query.filter_by(status='Allocated').count()
+    total_maintenance = Asset.query.filter_by(status='Under Maintenance').count()
     
-    active_bookings = ResourceBooking.query.filter_by(status='Ongoing').count()[cite: 1]
+    active_bookings = ResourceBooking.query.filter_by(status='Ongoing').count()
 
-    # FIXED: Changed from .group_index() to the valid SQLAlchemy function .group_by()
     categories_breakdown = db.session.query(
         Asset.category, db.func.count(Asset.id)
     ).group_by(Asset.category).all()
@@ -252,12 +318,12 @@ def get_dashboard_kpis():
 
     return jsonify({
         "kpi_cards": {
-            "assets_available": total_available,[cite: 1]
-            "assets_allocated": total_allocated,[cite: 1]
-            "maintenance_today": total_maintenance,[cite: 1]
-            "active_bookings": active_bookings[cite: 1]
+            "assets_available": total_available,
+            "assets_allocated": total_allocated,
+            "maintenance_today": total_maintenance,
+            "active_bookings": active_bookings
         },
         "analytics": {
-            "category_distribution": category_summary[cite: 1]
+            "category_distribution": category_summary
         }
     }), 200

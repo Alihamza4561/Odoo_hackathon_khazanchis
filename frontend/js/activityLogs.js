@@ -28,7 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnDeleteYes = document.getElementById('btn-delete-yes');
     const btnDeleteNo = document.getElementById('btn-delete-no');
 
-    function initializeApplication() {
+    async function initializeApplication() {
+        try {
+            // Fetch live data from backend pipeline
+            notificationRecords = await window.AssetFlowAPI.listNotifications();
+            notificationRecords.forEach(n => {
+                n.timestamp = n.timestamp ? new Date(n.timestamp).getTime() : Date.now();
+            });
+        } catch (err) {
+            console.error("Failed to sync notifications from backend database:", err);
+            notificationRecords = [];
+        }
         renderInterfacePipeline();
         setupDeclarativeEventListeners();
     }
@@ -81,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </td>
                 <td><span class="msg-text">${escapeHtmlFormatting(notification.message)}</span></td>
-                <td><span class="time-text">${escapeHtmlFormatting(notification.time)}</span></td>
+                <td><span class="time-text">${escapeHtmlFormatting(notification.time || notification.time_label)}</span></td>
                 <td><span class="badge ${badgeClass}">${notification.status}</span></td>
                 <td>
                     <div class="action-cell-container">
@@ -157,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setupDeclarativeEventListeners() {
-        
         filterGroupContainer.addEventListener('click', (e) => {
             const clickTarget = e.target.closest('.btn-filter');
             if (!clickTarget) return;
@@ -170,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         searchInput.addEventListener('input', renderInterfacePipeline);
-
         sortSelect.addEventListener('change', renderInterfacePipeline);
 
         btnOpenForm.addEventListener('click', () => {
