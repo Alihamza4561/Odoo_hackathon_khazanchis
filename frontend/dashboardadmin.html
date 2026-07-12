@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Admin Dashboard</h1>
+        <p>Enterprise Asset Management System</p>
+    </header>
+
+    <section class="cards">
+
+        <div class="card available">
+            <h3>Total Assets</h3>
+            <h2>427</h2>
+        </div>
+
+        <div class="card allocated">
+            <h3>Total Employees</h3>
+            <h2>560</h2>
+        </div>
+
+        <div class="card maintenance">
+            <h3>Departments</h3>
+            <h2>12</h2>
+        </div>
+
+        <div class="card booking">
+            <h3>Pending Maintenance</h3>
+            <h2>24</h2>
+        </div>
+
+        <div class="card transfer">
+            <h3>Pending Transfers</h3>
+            <h2>8</h2>
+        </div>
+
+        <div class="card returns">
+            <h3>Upcoming Returns</h3>
+            <h2>19</h2>
+        </div>
+
+    </section>
+
+    <section class="dashboard-content">
+
+        <div class="panel">
+
+            <h2>Upcoming Returns</h2>
+
+            <table>
+
+                <tr>
+                    <th>Asset</th>
+                    <th>Employee</th>
+                    <th>Return Date</th>
+                </tr>
+
+                <tr>
+                    <td>MacBook Pro</td>
+                    <td>Ahmed Ali</td>
+                    <td>14 Jul 2026</td>
+                </tr>
+
+                <tr>
+                    <td>Monitor</td>
+                    <td>John David</td>
+                    <td>15 Jul 2026</td>
+                </tr>
+
+                <tr>
+                    <td>Printer</td>
+                    <td>Fatima Noor</td>
+                    <td>16 Jul 2026</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="panel">
+
+            <h2>Overdue Returns</h2>
+
+            <table>
+
+                <tr>
+                    <th>Asset</th>
+                    <th>Employee</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                </tr>
+
+                <tr>
+                    <td>Dell Laptop</td>
+                    <td>Ali Khan</td>
+                    <td>10 Jul 2026</td>
+                    <td><span class="status overdue">Overdue</span></td>
+                </tr>
+
+                <tr>
+                    <td>Projector</td>
+                    <td>Sarah Ahmed</td>
+                    <td>11 Jul 2026</td>
+                    <td><span class="status overdue">Overdue</span></td>
+                </tr>
+
+                <td>Printer</td>
+                <td>Ahmed Ali</td>
+                <td>12 Jul 2026</td>
+                <td><span class="status overdue">Overdue</span></td>
+
+            </table>
+
+        </div>
+
+    </section>
+    <section class="panel">
+
+    <h2>Asset Inventory</h2>
+
+    <table>
+
+        <tr>
+            <th>Asset</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Location</th>
+        </tr>
+
+        <tr>
+            <td>Dell Laptop</td>
+            <td>IT Equipment</td>
+            <td>Available</td>
+            <td>Computer Lab</td>
+        </tr>
+
+        <tr>
+            <td>Projector</td>
+            <td>Office Equipment</td>
+            <td>Allocated</td>
+            <td>Conference Room</td>
+        </tr>
+
+        <tr>
+            <td>Printer</td>
+            <td>Office Equipment</td>
+            <td>Maintenance</td>
+            <td>Admin Block</td>
+        </tr>
+
+    </table>
+
+</section>
+
+    <section class="quick-actions">
+<div class="action-card">
+    <h3>Add New Asset</h3>
+    <p>Register a new asset.</p>
+</div>
+
+<div class="action-card">
+    <h3>Add Employee</h3>
+    <p>Create a new employee record.</p>
+</div>
+
+<div class="action-card">
+    <h3>Allocate Asset</h3>
+    <p>Assign assets to employees.</p>
+</div>
+
+<div class="action-card">
+    <h3>Generate Report</h3>
+    <p>View and download reports.</p>
+</div>
+
+    </section>
+    <section class="panel">
+
+    <h2>Recent Activities</h2>
+
+    <table>
+
+        <tr>
+            <th>Activity</th>
+            <th>User</th>
+            <th>Time</th>
+        </tr>
+
+        <tr>
+            <td>New Asset Added</td>
+            <td>Admin</td>
+            <td>10:15 AM</td>
+        </tr>
+
+        <tr>
+            <td>Asset Allocated</td>
+            <td>Asset Manager</td>
+            <td>11:30 AM</td>
+        </tr>
+
+        <tr>
+            <td>Maintenance Approved</td>
+            <td>Admin</td>
+            <td>01:20 PM</td>
+        </tr>
+
+    </table>
+
+</section>
+
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>
+```

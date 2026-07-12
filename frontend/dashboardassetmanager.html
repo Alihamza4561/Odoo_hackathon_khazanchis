@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset manager Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+       <h1>Asset Manager Dashboard</h1>
+       <p>Manage and Monitor Enterprise Assets</p>
+    </header>
+
+    <section class="cards">
+
+        <div class="card available">
+            <h3>Total Assets</h3>
+            <h2>427</h2>
+        </div>
+
+        <div class="card allocated">
+            <h3>Available Assets</h3>
+            <h2>248</h2>
+        </div>
+
+        <div class="card maintenance">
+            <h3>Allocated Assets</h3>
+            <h2>167</h2>
+        </div>
+
+        <div class="card booking">
+            <h3>Under Maintenance</h3>
+            <h2>12</h2>
+        </div>
+
+        <div class="card transfer">
+            <h3>Pending Transfers</h3>
+            <h2>8</h2>
+        </div>
+
+        <div class="card returns">
+            <h3>Low Stock Assets</h3>
+            <h2>5</h2>
+        </div>
+
+    </section>
+
+    <section class="dashboard-content">
+
+        <div class="panel">
+
+            <h2>Maintenance Queue</h2>
+
+            <table>
+
+                <tr>
+                    <th>Asset</th>
+                    <th>Issue</th>
+                    <th>Status</th>
+                </tr>
+
+                <tr>
+                    <td>Printer</td>
+                    <td>Paper Jam</td>
+                    <td>Pending</td>
+                </tr>
+
+                <tr>
+                    <td>Dell Laptop</td>
+                    <td>Battery Replacement</td>
+                    <td>In Progress</td>
+                </tr>
+
+                <tr>
+                    <td>Projector</td>
+                    <td>Display Issue</td>
+                    <td>Completed</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="panel">
+
+            <h2>Recent Asset Allocations</h2>
+
+            <table>
+
+                <tr>
+                    <th>Asset</th>
+                    <th>Assigned To</th>
+                    <th>Date</th>
+                </tr>
+
+                <tr>
+                    <td>Dell Laptop</td>
+                    <td>Ali Khan</td>
+                    <td>10 Jul 2026</td>
+                </tr>
+
+                <tr>
+                    <td>Projector</td>
+                    <td>Sarah Ahmed</td>
+                    <td>11 Jul 2026</td>
+                </tr>
+                
+                </tr>
+                   <td>Printer</td>
+                   <td>Ahmed Ali</td>
+                   <td>12 Jul 2026</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </section>
+    <section class="panel">
+
+    <h2>Managed Assets</h2>
+
+    <table>
+
+        <tr>
+            <th>Asset</th>
+            <th>Category</th>
+            <th>Assigned To</th>
+            <th>Status</th>
+        </tr>
+
+        <tr>
+            <td>Dell Laptop</td>
+            <td>IT Equipment</td>
+            <td>Ali Khan</td>
+            <td>Allocated</td>
+        </tr>
+
+        <tr>
+            <td>Projector</td>
+            <td>Office Equipment</td>
+            <td>Sarah Ahmed</td>
+            <td>Available</td>
+        </tr>
+
+        <tr>
+            <td>Printer</td>
+            <td>Office Equipment</td>
+            <td>Technical Team</td>
+            <td>Under Maintenance</td>
+        </tr>
+
+    </table>
+
+</section>
+
+    <section class="quick-actions">
+<div class="action-card">
+    <h3>Add Asset</h3>
+    <p>Register new assets in system.</p>
+</div>
+
+<div class="action-card">
+    <h3>Update Asset</h3>
+    <p>Edit asset information.</p>
+</div>
+
+<div class="action-card">
+    <h3>Transfer Asset</h3>
+    <p>Move assets between users.</p>
+</div>
+
+<div class="action-card">
+    <h3>Maintenance Request</h3>
+    <p>Manage repair activities.</p>
+</div>
+
+    </section>
+
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>
+```
