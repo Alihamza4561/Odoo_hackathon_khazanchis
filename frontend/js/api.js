@@ -1,4 +1,4 @@
-/* ============================================================
+/* =
    AssetFlow — api.js
    Thin fetch wrapper around the Flask backend. Every page script
    should call AssetFlowAPI.* rather than fetch() directly, so the
@@ -7,8 +7,7 @@
    NOTE: until the backend is wired up, pages fall back to the
    mock arrays defined inline in each page's <script> — swap those
    render(MOCK_X) calls for render(await AssetFlowAPI.listX()) once
-   the endpoints below are live.
-   ============================================================ */
+   the endpoints below are live.*/
 (function () {
   const API_BASE = '/api';
 
@@ -41,13 +40,13 @@
   };
 
   window.AssetFlowAPI = {
-    // ---- auth ----
+    //  auth
     login: (data) => request('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
     signup: (data) => request('/auth/signup', { method: 'POST', body: JSON.stringify(data) }),
     logout: () => request('/auth/logout', { method: 'POST' }),
     me: () => request('/auth/me'),
 
-    // ---- org setup ----
+    // org setup 
     listDepartments: () => request('/departments'),
     createDepartment: (data) => request('/departments', { method: 'POST', body: JSON.stringify(data) }),
     listCategories: () => request('/categories'),
@@ -55,14 +54,14 @@
     listEmployees: (params) => request(`/employees${qs(params)}`),
     promoteEmployee: (id, role) => request(`/employees/${id}/role`, { method: 'PATCH', body: JSON.stringify({ role }) }),
 
-    // ---- assets (Screen 4) ----
+    // assets (Screen 4) 
     listAssets: (params) => request(`/assets${qs(params)}`),
     getAsset: (id) => request(`/assets/${id}`),
     registerAsset: (data) => request('/assets', { method: 'POST', body: JSON.stringify(data) }),
     updateAssetStatus: (id, status) => request(`/assets/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
     getAssetHistory: (id) => request(`/assets/${id}/history`),
 
-    // ---- allocation & transfer (Screen 5) ----
+    // allocation & transfer (Screen 5) 
     listAllocations: (params) => request(`/allocations${qs(params)}`),
     allocateAsset: (data) => request('/allocations', { method: 'POST', body: JSON.stringify(data) }),
     requestTransfer: (allocationId, data) => request(`/allocations/${allocationId}/transfer`, { method: 'POST', body: JSON.stringify(data) }),
@@ -70,21 +69,21 @@
     rejectTransfer: (transferId) => request(`/transfers/${transferId}/reject`, { method: 'POST' }),
     returnAsset: (allocationId, data) => request(`/allocations/${allocationId}/return`, { method: 'POST', body: JSON.stringify(data) }),
 
-    // ---- resource booking ----
+    // - resource booking 
     listBookings: (params) => request(`/bookings${qs(params)}`),
     createBooking: (data) => request('/bookings', { method: 'POST', body: JSON.stringify(data) }),
     cancelBooking: (id) => request(`/bookings/${id}/cancel`, { method: 'POST' }),
 
-    // ---- maintenance ----
+    // -maintenance 
     listMaintenanceRequests: (params) => request(`/maintenance${qs(params)}`),
     raiseMaintenanceRequest: (data) => request('/maintenance', { method: 'POST', body: JSON.stringify(data) }),
     approveMaintenanceRequest: (id) => request(`/maintenance/${id}/approve`, { method: 'POST' }),
 
-    // ---- audits ----
+    //audits 
     listAuditCycles: () => request('/audits'),
     createAuditCycle: (data) => request('/audits', { method: 'POST', body: JSON.stringify(data) }),
 
-    // ---- notifications ----
+    //  notifications 
     listNotifications: () => request('/notifications'),
   };
 })();

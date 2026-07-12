@@ -1,10 +1,8 @@
-/* ============================================================
-   AssetFlow — role-handler.js
+/* AssetFlow — role-handler.js
    Shared on every page. Drives the "Viewing as" role switcher
    in the topbar (for frontend demo purposes, ahead of real auth),
    hides/shows elements marked data-roles="admin,asset-manager",
-   and highlights the active sidebar link.
-   ============================================================ */
+   and highlights the active sidebar link.*/
 (function () {
   const STORAGE_KEY = 'af_role';
   const DEFAULT_ROLE = 'admin';
@@ -57,7 +55,6 @@
     const btn = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     if (!btn || !sidebar) return;
-    // Only relevant at mobile widths — styles.css hides the button above 900px.
     const mq = window.matchMedia('(max-width:900px)');
     const sync = () => { btn.style.display = mq.matches ? 'flex' : 'none'; };
     sync();
