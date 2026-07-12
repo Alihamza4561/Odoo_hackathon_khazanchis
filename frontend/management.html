@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AssetFlow - Maintenance Kanban Board</title>
+    <link rel="stylesheet" href="management.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-container">
+            <span class="logo">AssetFlow</span>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="content-container">
+            
+            <div id="toast-notification" class="toast-banner hidden"></div>
+
+            <section class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-wrapper">
+                        <input type="text" id="search-input" placeholder="Search maintenance requests...">
+                    </div>
+                    <div class="control-group">
+                        <label for="filter-priority">Priority:</label>
+                        <select id="filter-priority" class="custom-select">
+                            <option value="All">All</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Critical">Critical</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="sort-select">Sort:</label>
+                        <select id="sort-select" class="custom-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="priority">Priority Weight</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <button id="btn-open-form" class="btn btn-green">+ Create Maintenance Request</button>
+                </div>
+            </section>
+
+            <section class="kanban-board">
+                <div class="kanban-column" data-status="Pending">
+                    <div class="column-header">
+                        <h3>Pending</h3>
+                        <span class="column-count" id="count-Pending">0</span>
+                    </div>
+                    <div class="cards-container" id="container-Pending"></div>
+                </div>
+
+                <div class="kanban-column" data-status="Approved">
+                    <div class="column-header">
+                        <h3>Approved</h3>
+                        <span class="column-count" id="count-Approved">0</span>
+                    </div>
+                    <div class="cards-container" id="container-Approved"></div>
+                </div>
+
+                <div class="kanban-column" data-status="Technician Assigned">
+                    <div class="column-header">
+                        <h3>Technician Assigned</h3>
+                        <span class="column-count" id="count-Technician Assigned">0</span>
+                    </div>
+                    <div class="cards-container" id="container-Technician Assigned"></div>
+                </div>
+
+                <div class="kanban-column" data-status="In Progress">
+                    <div class="column-header">
+                        <h3>In Progress</h3>
+                        <span class="column-count" id="count-In Progress">0</span>
+                    </div>
+                    <div class="cards-container" id="container-In Progress"></div>
+                </div>
+
+                <div class="kanban-column" data-status="Resolved">
+                    <div class="column-header">
+                        <h3>Resolved</h3>
+                        <span class="column-count" id="count-Resolved">0</span>
+                    </div>
+                    <div class="cards-container" id="container-Resolved"></div>
+                </div>
+            </section>
+
+            <footer class="board-footer">
+                <p>Approving a request moves it into maintenance workflow. Resolving it returns the asset to available status.</p>
+            </footer>
+
+            <section id="maintenance-form-section" class="maintenance-form-section hidden">
+                <h2 id="form-title" class="form-heading">Create Maintenance Request</h2>
+                <form id="maintenance-form" novalidate>
+                    <input type="hidden" id="request-id">
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="asset-id">Asset ID</label>
+                            <input type="text" id="asset-id" required placeholder="e.g., AF-0062">
+                        </div>
+                        <div class="form-group">
+                            <label for="asset-name">Asset Name</label>
+                            <input type="text" id="asset-name" required placeholder="e.g., Epson Projector X1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issue-title">Issue Title</label>
+                        <input type="text" id="issue-title" required placeholder="e.g., Projector bulb not turning on">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issue-desc">Issue Description</label>
+                        <textarea id="issue-desc" rows="3" required placeholder="Describe details of failure..."></textarea>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="priority-select">Priority</label>
+                            <select id="priority-select" class="custom-select" required>
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+                                <option value="Critical">Critical</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="requested-by">Requested By</label>
+                            <input type="text" id="requested-by" required placeholder="e.g., Priya Shah">
+                        </div>
+                    </div>
+
+                    <div id="form-error-banner" class="error-banner hidden"></div>
+
+                    <div class="form-actions">
+                        <button type="button" id="btn-cancel-form" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" id="btn-save-form" class="btn btn-green">Save</button>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="view-modal" class="modal-overlay hidden">
+        <div class="modal-box view-modal-box">
+            <div class="modal-header">
+                <h2 id="view-modal-title">Request Details</h2>
+                <span class="badge" id="view-badge-priority">Medium</span>
+            </div>
+            <div class="modal-body-content">
+                <div class="detail-row"><strong>Asset ID:</strong> <span id="view-asset-id"></span></div>
+                <div class="detail-row"><strong>Asset Name:</strong> <span id="view-asset-name"></span></div>
+                <div class="detail-row"><strong>Issue:</strong> <span id="view-issue-title"></span></div>
+                <div class="detail-row"><strong>Description:</strong> <p id="view-issue-desc"></p></div>
+                <div class="detail-row"><strong>Status:</strong> <span id="view-current-status"></span></div>
+                <div class="detail-row" id="view-tech-row"><strong>Assigned Technician:</strong> <span id="view-technician"></span></div>
+                <div class="detail-row"><strong>Requested By:</strong> <span id="view-requested-by"></span></div>
+                <div class="detail-row"><strong>Created Date:</strong> <span id="view-created-date"></span></div>
+            </div>
+            <div class="modal-footer-actions">
+                <button id="btn-close-view" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tech-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Assign Technician</h3>
+            <div class="form-group" style="text-align: left; margin: 16px 0;">
+                <label for="tech-select">Choose Technician</label>
+                <select id="tech-select" class="custom-select">
+                    <option value="R Varma">R Varma</option>
+                    <option value="P Sharma">P Sharma</option>
+                    <option value="A Mehta">A Mehta</option>
+                    <option value="S Gupta">S Gupta</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button id="btn-cancel-tech" class="btn btn-secondary">Cancel</button>
+                <button id="btn-confirm-tech" class="btn btn-green">Assign & Move</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Are you sure you want to delete this maintenance request?</h3>
+            <div class="modal-actions">
+                <button id="btn-delete-no" class="btn btn-secondary">No</button>
+                <button id="btn-delete-yes" class="btn btn-danger">Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="management.js"></script>
+</body>
+</html>
