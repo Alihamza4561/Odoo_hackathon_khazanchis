@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AssetFlow - Activity Logs & Notifications</title>
+    <link rel="stylesheet" href="activityLogs.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-container">
+            <span class="logo">AssetFlow</span>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="content-container">
+            
+            <section class="toolbar">
+                <div class="toolbar-top">
+                    <div class="filter-group" id="filter-group">
+                        <button class="btn-filter active" data-filter="all">All</button>
+                        <button class="btn-filter" data-filter="Alert">Alerts</button>
+                        <button class="btn-filter" data-filter="Approval">Approvals</button>
+                        <button class="btn-filter" data-filter="Booking">Bookings</button>
+                    </div>
+                    <button id="btn-open-form" class="btn btn-green">+ Create Notification</button>
+                </div>
+                
+                <div class="toolbar-bottom">
+                    <div class="search-wrapper">
+                        <input type="text" id="search-input" placeholder="Search notifications...">
+                    </div>
+                    <div class="sort-wrapper">
+                        <label for="sort-select">Sort:</label>
+                        <select id="sort-select" class="custom-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="table-responsive">
+                <table class="notification-table" id="notification-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">Type</th>
+                            <th>Message</th>
+                            <th style="width: 140px;">Time</th>
+                            <th style="width: 110px;">Status</th>
+                            <th style="width: 160px; text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notification-list-body">
+                        </tbody>
+                </table>
+            </section>
+
+            <div id="empty-state" class="empty-state-view hidden">
+                <p>No notifications found.</p>
+            </div>
+
+            <section id="form-panel-section" class="form-panel-section hidden">
+                <h2 class="form-heading">Create Notification</h2>
+                <form id="notification-form" novalidate>
+                    <div class="form-group">
+                        <label for="form-type">Notification Type</label>
+                        <select id="form-type" class="custom-select" required>
+                            <option value="" disabled selected>Select category...</option>
+                            <option value="Alert">Alert</option>
+                            <option value="Approval">Approval</option>
+                            <option value="Booking">Booking</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-message">Message</label>
+                        <input type="text" id="form-message" required placeholder="Enter notification message details...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-time">Time</label>
+                        <input type="text" id="form-time" required placeholder="e.g., Just now, 2 hours ago, 10:45 AM">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-status">Status</label>
+                        <select id="form-status" class="custom-select" required>
+                            <option value="Unread" selected>Unread</option>
+                            <option value="Read">Read</option>
+                        </select>
+                    </div>
+
+                    <div id="form-error-banner" class="error-banner hidden"></div>
+
+                    <div class="form-actions">
+                        <button type="button" id="btn-cancel-form" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" id="btn-save-form" class="btn btn-green">Save</button>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="delete-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Are you sure you want to delete this notification?</h3>
+            <div class="modal-actions">
+                <button id="btn-delete-no" class="btn btn-secondary">No</button>
+                <button id="btn-delete-yes" class="btn btn-danger">Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="activityLogs.js"></script>
+</body>
+</html>

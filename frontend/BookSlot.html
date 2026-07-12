@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AssetFlow - Resource Booking</title>
+    <link rel="stylesheet" href="BookSlot.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-container">
+            <span class="logo">AssetFlow</span>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="content-container">
+            <section class="resource-selector">
+                <label for="resource-select" class="selector-label">Resource</label>
+                <select id="resource-select" class="custom-select">
+                    <option value="room-a1">Conference Room A1</option>
+                    <option value="room-b2" selected>Conference Room B2 - Tue, 7 Jul</option>
+                    <option value="room-c1">Conference Room C1</option>
+                    <option value="room-training">Training Room</option>
+                    <option value="room-meeting5">Meeting Room 5</option>
+                </select>
+            </section>
+
+            <div id="schedule-view">
+                <section class="timeline-container">
+                    <div class="timeline-grid" id="timeline-grid">
+                        </div>
+                </section>
+
+                <section class="action-section" id="action-section">
+                    <button id="btn-open-booking" class="btn btn-green">Book a Slot</button>
+                </section>
+            </div>
+
+            <section id="booking-form-section" class="booking-form-section hidden">
+                <h2 id="form-title" class="form-heading">New Booking</h2>
+                <form id="booking-form" novalidate>
+                    <input type="hidden" id="booking-id">
+                    
+                    <div class="form-group">
+                        <label for="form-resource">Resource</label>
+                        <select id="form-resource" class="custom-select" disabled>
+                            <option value="room-a1">Conference Room A1</option>
+                            <option value="room-b2">Conference Room B2 - Tue, 7 Jul</option>
+                            <option value="room-c1">Conference Room C1</option>
+                            <option value="room-training">Training Room</option>
+                            <option value="room-meeting5">Meeting Room 5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="booking-title">Booking Title</label>
+                        <input type="text" id="booking-title" required placeholder="e.g., Project Review">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="requested-by">Requested By</label>
+                        <input type="text" id="requested-by" required placeholder="e.g., Procurement Team">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="booking-date">Date</label>
+                            <input type="date" id="booking-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="start-time">Start Time</label>
+                            <select id="start-time" class="custom-select" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="end-time">End Time</label>
+                            <select id="end-time" class="custom-select" required></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="booking-purpose">Purpose</label>
+                        <textarea id="booking-purpose" rows="3" placeholder="Describe the purpose of this reservation..."></textarea>
+                    </div>
+
+                    <div id="form-error-message" class="error-banner hidden"></div>
+
+                    <div class="form-actions">
+                        <button type="button" id="btn-cancel-booking" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" id="btn-submit-booking" class="btn btn-green">Book</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <div id="delete-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Are you sure you want to delete this booking?</h3>
+            <div class="modal-actions">
+                <button id="btn-delete-no" class="btn btn-secondary">No</button>
+                <button id="btn-delete-yes" class="btn btn-danger">Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="BookSlot.js"></script>
+</body>
+</html>

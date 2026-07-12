@@ -1,14 +1,13 @@
-/* Core Configurations and Theme Layout Variables */
 :root {
-    --bg-main: #ffffff;            /* Clean white background */
-    --bg-card: #f4f5f8;            /* Light gray card wrapper */
-    --bg-control: #e4e6f0;         /* Contrasting button backgrounds */
-    --bg-control-hover: #d2d5e5;   /* Smooth dark hover states */
-    --accent-green: #592ec4;       /* Vibrant dark-green accent for readability */
+    --bg-main: #ffffff;            
+    --bg-card: #f4f5f8;            
+    --bg-control: #e4e6f0;         
+    --bg-control-hover: #d2d5e5;   
+    --accent-green: #592ec4;       
     --accent-red: #eb5e28;
-    --text-primary: #121420;       /* Dark text for white/light elements */
-    --text-muted: #62687f;         /* Muted dark gray text */
-    --border-color: #ccd0e0;       /* Visible subtle line separators */
+    --text-primary: #121420;      
+    --text-muted: #62687f;         
+    --border-color: #ccd0e0;       
     --badge-active-bg: rgba(46, 196, 182, 0.15);
     --badge-inactive-bg: rgba(235, 94, 40, 0.15);
     --badge-inactive-text: #eb5e28;
@@ -29,7 +28,6 @@ body {
     flex-direction: column;
 }
 
-/* Header Component */
 .main-header {
     padding: 20px 40px;
     background-color: var(--bg-main);
@@ -49,7 +47,6 @@ body {
     margin: 0;
 }
 
-/* Layout Framework */
 .content-container {
     flex: 1;
     display: flex;
@@ -68,7 +65,6 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* Controls and Buttons Grid */
 .controls-row {
     display: flex;
     justify-content: space-between;
@@ -125,7 +121,6 @@ body {
     border-color: var(--text-muted);
 }
 
-/* Layout State Transitions */
 .dynamic-content-area {
     position: relative;
     min-height: 0px;
@@ -155,7 +150,6 @@ body {
     display: none !important;
 }
 
-/* Interactive Table Systems */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -198,7 +192,6 @@ body {
     background-color: rgba(255, 255, 255, 0.01);
 }
 
-/* Inline Input styles for editing fields */
 .table-inline-input {
     background-color: var(--bg-main);
     border: 1px solid var(--border-color);
@@ -214,7 +207,6 @@ body {
     border-color: var(--accent-green);
 }
 
-/* Contextual Badging Systems */
 .badge {
     display: inline-block;
     padding: 4px 12px;
@@ -236,7 +228,6 @@ body {
     color: var(--badge-inactive-text);
 }
 
-/* Action Control Row Interaction Elements */
 .actions-cell-container {
     display: flex;
     gap: 8px;
@@ -273,7 +264,6 @@ body {
     border-color: var(--accent-red);
 }
 
-/* Separators */
 .section-divider {
     border: 0;
     height: 1px;
@@ -281,7 +271,6 @@ body {
     margin: 24px 0;
 }
 
-/* Declarative Dynamic Form Framework */
 .form-wrapper {
     background-color: rgba(0, 0, 0, 0.15);
     border: 1px solid var(--border-color);
@@ -370,7 +359,6 @@ body {
     background-color: var(--bg-control);
 }
 
-/* Interface Fluidity Customizations */
 @media(max-width: 768px) {
     .controls-row {
         flex-direction: column;
