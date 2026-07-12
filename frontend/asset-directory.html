@@ -10,7 +10,7 @@
 
 <div class="app-shell">
 
-  <!-- ============== SIDEBAR (copy of components/sidebar.html, this page active) ============== -->
+  <!-- SIDEBAR (copy of components/sidebar.html, this page active) -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="sidebar-mark">AF</div>
@@ -73,8 +73,7 @@
   </aside>
 
   <div class="main-col">
-
-    <!-- ============== TOPBAR (copy of components/navbar.html) ============== -->
+<!-- TOPBAR (copy of components/navbar.html)  -->
     <header class="topbar">
       <button class="icon-btn" id="sidebarToggle" aria-label="Toggle menu" style="display:none;">
         <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -100,7 +99,7 @@
       <div class="avatar">S</div>
     </header>
 
-    <!-- ============== PAGE ============== -->
+    <!--  PAGE  -->
     <main class="page">
       <div class="page-head">
         <div>
@@ -119,7 +118,7 @@
         </button>
       </div>
 
-      <!-- ---------- TAB: DIRECTORY (Screen 4) ---------- -->
+      <!-- TAB: DIRECTORY (Screen 4)-->
       <section class="tab-panel active" id="panel-directory">
         <div class="filter-bar">
           <select class="select" id="filterStatus">
@@ -178,7 +177,7 @@
         </div>
       </section>
 
-      <!-- ---------- TAB: ALLOCATION & TRANSFER (Screen 5) ---------- -->
+      <!-- TAB: ALLOCATION & TRANSFER (Screen 5)-->
       <section class="tab-panel" id="panel-allocation">
         <div class="filter-bar">
           <select class="select" id="filterAllocStatus">
@@ -221,9 +220,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     MODAL: Register Asset (Screen 4)
-     ============================================================ -->
+<!-- MODAL: Register Asset (Screen 4)-->
 <div class="overlay" id="overlayRegister">
   <div class="modal" role="dialog" aria-labelledby="registerTitle">
     <div class="modal-head">
@@ -309,9 +306,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     DRAWER: Asset Detail (Screen 4)
-     ============================================================ -->
+<!-- DRAWER: Asset Detail (Screen 4)-->
 <div class="overlay drawer-overlay" id="overlayDetail">
   <div class="drawer" role="dialog" aria-labelledby="detailTitle">
     <div class="drawer-head">
@@ -352,10 +347,8 @@
   </div>
 </div>
 
-<!-- ============================================================
-     MODAL: Allocate Asset — includes the double-allocation
-     conflict flow (Screen 5's core rule)
-     ============================================================ -->
+<!--MODAL: Allocate Asset — includes the double-allocation
+     conflict flow (Screen 5's core rule)-->
 <div class="overlay" id="overlayAllocate">
   <div class="modal" role="dialog" aria-labelledby="allocateTitle">
     <div class="modal-head">
@@ -409,9 +402,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     MODAL: Transfer Request workflow
-     ============================================================ -->
+<!--MODAL: Transfer Request workflow-->
 <div class="overlay" id="overlayTransfer">
   <div class="modal" role="dialog" aria-labelledby="transferTitle">
     <div class="modal-head">
@@ -465,9 +456,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     MODAL: Return Asset
-     ============================================================ -->
+<!--MODAL: Return Asset-->
 <div class="overlay" id="overlayReturn">
   <div class="modal" role="dialog" aria-labelledby="returnTitle">
     <div class="modal-head">
@@ -504,10 +493,8 @@
 <script>
 (function(){
 
-  /* ============================================================
-     Mock data — swap for AssetFlowAPI.listAssets() / listAllocations()
-     once the Flask endpoints are live.
-     ============================================================ */
+    //  Mock data — swap for AssetFlowAPI.listAssets() / listAllocations()
+    //  once the Flask endpoints are live.
   let assets = [
     {tag:'AF-0101', name:'Dell Latitude 5440 Laptop', category:'Electronics', status:'available', dept:'Engineering', location:'HQ — Floor 2', condition:'Good', bookable:false, serial:'DL5440-2291', acquired:'2024-11-02', cost:'₹78,000'},
     {tag:'AF-0114', name:'MacBook Pro 14"', category:'Electronics', status:'allocated', dept:'Design', location:'HQ — Floor 3', condition:'Excellent', bookable:false, serial:'MBP14-8827', acquired:'2025-01-14', cost:'₹1,92,000', holder:'Priya Sharma'},
@@ -533,9 +520,7 @@
     maintenance:'Under Maintenance', lost:'Lost', retired:'Retired', disposed:'Disposed',
   };
 
-  /* ============================================================
-     Small helpers
-     ============================================================ */
+  /*Small helpers*/
   function badge(status){
     return `<span class="badge badge-${status}">${STATUS_LABEL[status]}</span>`;
   }
@@ -562,9 +547,7 @@
     return 'AF-' + String(next).padStart(4,'0');
   }
 
-  /* ============================================================
-     Tabs
-     ============================================================ */
+  /*Tabs */
   document.querySelectorAll('.tab-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -574,9 +557,7 @@
     });
   });
 
-  /* ============================================================
-     DIRECTORY (Screen 4)
-     ============================================================ */
+  /*DIRECTORY (Screen 4) */
   const directoryBody = document.getElementById('directoryBody');
   const directoryEmpty = document.getElementById('directoryEmpty');
 
@@ -620,7 +601,7 @@
     openAssetDetail(tr.dataset.tag);
   });
 
-  /* ---------- Register Asset ---------- */
+  /*Register Asset */
   document.getElementById('btnRegisterAsset').addEventListener('click', ()=>{
     document.getElementById('formRegister').reset();
     document.getElementById('nextTagPreview').textContent = nextTag();
@@ -649,7 +630,7 @@
     toast(`Asset ${tag} registered as Available.`);
   });
 
-  /* ---------- Asset Detail Drawer ---------- */
+  /* Asset Detail Drawer*/
   let activeDetailTag = null;
 
   function openAssetDetail(tag){
@@ -694,9 +675,7 @@
     toast(`${a.tag} status updated to ${STATUS_LABEL[a.status]}.`);
   });
 
-  /* ============================================================
-     ALLOCATION & TRANSFER (Screen 5)
-     ============================================================ */
+  /* ALLOCATION & TRANSFER (Screen 5)*/
   const allocationBody = document.getElementById('allocationBody');
 
   function renderAllocations(){
@@ -741,7 +720,7 @@
     if(btn.dataset.action === 'return') openReturn(al);
   });
 
-  /* ---------- Allocate Asset (with conflict handling) ---------- */
+  /*Allocate Asset (with conflict handling)*/
   document.getElementById('btnAllocateAsset').addEventListener('click', ()=>{
     const sel = document.getElementById('allocAsset');
     sel.innerHTML = assets.map(a =>
@@ -793,7 +772,7 @@
     toast(`${a.tag} allocated to ${holderName}.`);
   });
 
-  /* ---------- Transfer Request ---------- */
+  /* Transfer Request*/
   let activeTransfer = null;
 
   function openTransfer(al){
@@ -849,7 +828,7 @@
     setTimeout(()=> closeOverlay('overlayTransfer'), 900);
   });
 
-  /* ---------- Return Asset ---------- */
+  /*  Return Asset */
   let activeReturn = null;
 
   function openReturn(al){
@@ -871,9 +850,7 @@
     toast(`${activeReturn.tag} marked returned — status set to Available.`);
   });
 
-  /* ============================================================
-     Init
-     ============================================================ */
+  /* Init */
   renderDirectory();
   renderAllocations();
 })();
