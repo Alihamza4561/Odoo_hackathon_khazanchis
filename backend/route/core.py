@@ -40,18 +40,14 @@ def get_assets():
         })
     return jsonify(output), 200
 
-# ----------------- RESOURCE BOOKING (WITH OVERLAP VALIDATION) -----------------
 @core_bp.route('/bookings', methods=['POST'])
 def create_booking():
     data = request.json
     asset_id = data['asset_id']
     
-    # Parse incoming strings into python datetime objects
     start_time = datetime.fromisoformat(data['start_time'])
     end_time = datetime.fromisoformat(data['end_time'])
 
-    # Core Hackathon Logic: Prevent Overlapping Bookings[cite: 1]
-    # Check if any existing booking overlaps with this requested timeframe
     overlapping_booking = ResourceBooking.query.filter(
         ResourceBooking.asset_id == asset_id,
         ResourceBooking.status != 'Cancelled',
@@ -74,3 +70,54 @@ def create_booking():
     db.session.commit()
     
     return jsonify({"message": "Booking confirmed successfully!", "booking_id": new_booking.id}), 201
+
+@core_bp.route('/employees', methods=['GET'])
+def get_employee_directory():
+    employees = Employee.query.all()
+    output = []
+    for emp in employees:
+        output.append({
+            "id": emp.id,
+            "name": emp.name,
+            "email": emp.email,
+            "role": emp.role,
+            "status": emp.status,
+            "department_id": emp.department_id
+        })
+    return jsonify(output), 200
+
+
+@core_bp.route('/assets/<asset_id>/allocate', methods=['POST'])
+def allocate_asset(asset_id):
+    data = request.json
+    employee_id = data.get('employee_id')
+    
+    asset = Asset.query.get_or_404(asset_id)
+
+    if asset.status == 'Allocated':
+        current_holder = Employee.query.get(asset.current_holder_id)
+        holder_name = current_holder.name if current_holder else "another employee"
+        
+        return jsonify({
+            "error": "Conflict",
+            "message": f"Asset is currently held by {holder_name}. Please submit a Transfer Request instead."
+        }), 409
+
+    asset.status = 'Allocated'[cite: 1]
+    asset.current_holder_id = employee_id
+    db.session.commit()
+    
+    return jsonify({"message": f"Asset successfully allocated to employee."}), 200
+
+@core_bp.route('/assets/<asset_id>/return', methods=['POST'])
+def return_asset(asset_id):
+    asset = Asset.query.get_or_404(asset_id)
+    
+    if asset.status != 'Allocated':
+        return jsonify({"error": "Asset is not currently allocated."}), 400
+        
+    asset.status = 'Available'[cite: 1]
+    asset.current_holder_id = None
+    db.session.commit()
+    
+    return jsonify({"message": "Asset successfully marked as returned and is now Available."}), 200
