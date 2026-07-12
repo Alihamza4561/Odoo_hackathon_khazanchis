@@ -10,7 +10,7 @@
 
 <div class="app-shell">
 
-  <!-- SIDEBAR (copy of components/sidebar.html, this page active) -->
+  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="sidebar-mark">AF</div>
@@ -27,35 +27,36 @@
       </a>
 
       <div class="nav-section-label">Setup</div>
-      <a class="nav-link" href="organization-setup.html" data-nav="organization-setup">
+      <a class="nav-link" href="organization-setup-screen.html" data-nav="organization-setup">
         <svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 4.5-3.2 7.7-8 9-4.8-1.3-8-4.5-8-9V7l8-4z"/></svg>
         Organization Setup
       </a>
 
       <div class="nav-section-label">Assets</div>
-      <a class="nav-link" href="asset-directory.html" data-nav="asset-directory">
+      <a class="nav-link active" href="asset-directory.html" data-nav="asset-directory">
         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg>
         Directory &amp; Allocation
       </a>
-      <a class="nav-link" href="resource-booking.html" data-nav="resource-booking">
+      <a class="nav-link" href="BookSlot.html" data-nav="resource-booking">
         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
         Resource Booking
       </a>
-      <a class="nav-link" href="maintenance.html" data-nav="maintenance">
+      <!-- FIXED: Changed link from management_2.html to match your actual management.html file -->
+      <a class="nav-link" href="management.html" data-nav="maintenance">
         <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 01-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 015.4-5.4l-3-3z"/></svg>
         Maintenance
       </a>
-      <a class="nav-link" href="audit.html" data-nav="audit">
+      <a class="nav-link" href="asset-audit.html" data-nav="audit">
         <svg viewBox="0 0 24 24"><path d="M9 11l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="2.5"/></svg>
         Audit Cycles
       </a>
 
       <div class="nav-section-label">Insights</div>
-      <a class="nav-link" href="reports.html" data-nav="reports">
+      <a class="nav-link" href="report&analytics.html" data-nav="reports">
         <svg viewBox="0 0 24 24"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
         Reports &amp; Analytics
       </a>
-      <a class="nav-link" href="activity.html" data-nav="activity">
+      <a class="nav-link" href="activityLogs.html" data-nav="activity">
         <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
         Activity &amp; Notifications
       </a>
@@ -73,7 +74,7 @@
   </aside>
 
   <div class="main-col">
-<!-- TOPBAR (copy of components/navbar.html)  -->
+    <!-- TOPBAR -->
     <header class="topbar">
       <button class="icon-btn" id="sidebarToggle" aria-label="Toggle menu" style="display:none;">
         <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -99,7 +100,7 @@
       <div class="avatar">S</div>
     </header>
 
-    <!--  PAGE  -->
+    <!-- PAGE CONTENT -->
     <main class="page">
       <div class="page-head">
         <div>
@@ -118,7 +119,7 @@
         </button>
       </div>
 
-      <!-- TAB: DIRECTORY (Screen 4)-->
+      <!-- TAB: DIRECTORY -->
       <section class="tab-panel active" id="panel-directory">
         <div class="filter-bar">
           <select class="select" id="filterStatus">
@@ -177,7 +178,7 @@
         </div>
       </section>
 
-      <!-- TAB: ALLOCATION & TRANSFER (Screen 5)-->
+      <!-- TAB: ALLOCATION & TRANSFER -->
       <section class="tab-panel" id="panel-allocation">
         <div class="filter-bar">
           <select class="select" id="filterAllocStatus">
@@ -220,7 +221,7 @@
   </div>
 </div>
 
-<!-- MODAL: Register Asset (Screen 4)-->
+<!-- MODAL: Register Asset -->
 <div class="overlay" id="overlayRegister">
   <div class="modal" role="dialog" aria-labelledby="registerTitle">
     <div class="modal-head">
@@ -248,7 +249,7 @@
             </select>
           </div>
           <div class="form-row">
-            <label for="regSerial">Serial Number</label>
+            <label pour="regSerial">Serial Number</label>
             <input id="regSerial" type="text" placeholder="Manufacturer serial no.">
           </div>
         </div>
@@ -306,7 +307,7 @@
   </div>
 </div>
 
-<!-- DRAWER: Asset Detail (Screen 4)-->
+<!-- DRAWER: Asset Detail -->
 <div class="overlay drawer-overlay" id="overlayDetail">
   <div class="drawer" role="dialog" aria-labelledby="detailTitle">
     <div class="drawer-head">
@@ -317,7 +318,6 @@
       <button class="modal-close" data-close="overlayDetail"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="modal-body">
-
       <div class="form-row">
         <label for="detailStatusSelect">Lifecycle Status</label>
         <select id="detailStatusSelect">
@@ -329,14 +329,10 @@
           <option value="retired">Retired</option>
           <option value="disposed">Disposed</option>
         </select>
-        <p class="form-hint">Changing this updates the asset's state immediately and is recorded in its history below.</p>
       </div>
-
       <div class="detail-grid" id="detailGrid"></div>
-
       <div class="drawer-subhead">Allocation History</div>
       <div id="detailAllocHistory"></div>
-
       <div class="drawer-subhead">Maintenance History</div>
       <div id="detailMaintHistory"></div>
     </div>
@@ -347,8 +343,7 @@
   </div>
 </div>
 
-<!--MODAL: Allocate Asset — includes the double-allocation
-     conflict flow (Screen 5's core rule)-->
+<!-- MODAL: Allocate Asset -->
 <div class="overlay" id="overlayAllocate">
   <div class="modal" role="dialog" aria-labelledby="allocateTitle">
     <div class="modal-head">
@@ -359,10 +354,7 @@
       <div class="form-row">
         <label for="allocAsset">Asset</label>
         <select id="allocAsset"></select>
-        <p class="form-hint">Assets already allocated are listed too — selecting one shows you who holds it.</p>
       </div>
-
-      <!-- conflict state, hidden unless the chosen asset is already allocated -->
       <div class="alert alert-danger hidden" id="conflictAlert">
         <svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.5 18a2 2 0 001.7 3h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
         <div>
@@ -371,7 +363,6 @@
           <button class="btn btn-danger btn-sm mt-16" id="btnRequestTransferInstead">Request Transfer Instead</button>
         </div>
       </div>
-
       <div id="allocateFormFields">
         <div class="form-row">
           <label>Allocate To</label>
@@ -390,7 +381,7 @@
           </select>
         </div>
         <div class="form-row">
-          <label for="allocReturn">Expected Return Date <span class="form-hint" style="display:inline">(optional)</span></label>
+          <label for="allocReturn">Expected Return Date</label>
           <input id="allocReturn" type="date">
         </div>
       </div>
@@ -402,7 +393,7 @@
   </div>
 </div>
 
-<!--MODAL: Transfer Request workflow-->
+<!-- MODAL: Transfer Request -->
 <div class="overlay" id="overlayTransfer">
   <div class="modal" role="dialog" aria-labelledby="transferTitle">
     <div class="modal-head">
@@ -411,7 +402,6 @@
     </div>
     <div class="modal-body">
       <p class="form-hint mt-8" id="transferSubtitle">AF-0114 — MacBook Pro 14", currently with Priya Sharma</p>
-
       <div class="stepper mt-16">
         <div class="step current" id="stepRequested">
           <div class="step-dot">1</div>
@@ -426,7 +416,6 @@
           <div class="step-label">Re-allocated</div>
         </div>
       </div>
-
       <div class="form-row">
         <label for="transferTo">Transfer To</label>
         <select id="transferTo">
@@ -439,7 +428,6 @@
         <label for="transferReason">Reason for transfer</label>
         <textarea id="transferReason" placeholder="e.g. Reassigning as the current holder is offboarding"></textarea>
       </div>
-
       <div class="alert alert-info" id="transferPendingNote">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
         <div>
@@ -456,7 +444,7 @@
   </div>
 </div>
 
-<!--MODAL: Return Asset-->
+<!-- MODAL: Return Asset -->
 <div class="overlay" id="overlayReturn">
   <div class="modal" role="dialog" aria-labelledby="returnTitle">
     <div class="modal-head">
@@ -491,369 +479,7 @@
 <script src="js/role-handler.js"></script>
 <script src="js/api.js"></script>
 <script>
-(function(){
-
-    //  Mock data — swap for AssetFlowAPI.listAssets() / listAllocations()
-    //  once the Flask endpoints are live.
-  let assets = [
-    {tag:'AF-0101', name:'Dell Latitude 5440 Laptop', category:'Electronics', status:'available', dept:'Engineering', location:'HQ — Floor 2', condition:'Good', bookable:false, serial:'DL5440-2291', acquired:'2024-11-02', cost:'₹78,000'},
-    {tag:'AF-0114', name:'MacBook Pro 14"', category:'Electronics', status:'allocated', dept:'Design', location:'HQ — Floor 3', condition:'Excellent', bookable:false, serial:'MBP14-8827', acquired:'2025-01-14', cost:'₹1,92,000', holder:'Priya Sharma'},
-    {tag:'AF-0027', name:'Conference Room Projector', category:'Electronics', status:'reserved', dept:'Facilities', location:'HQ — Room B2', condition:'Good', bookable:true, serial:'EPX-4471', acquired:'2023-06-20', cost:'₹41,500'},
-    {tag:'AF-0056', name:'Ergonomic Office Chair', category:'Furniture', status:'allocated', dept:'HR', location:'HQ — Floor 1', condition:'Good', bookable:false, serial:'EOC-1102', acquired:'2022-09-10', cost:'₹14,200', holder:'HR Department'},
-    {tag:'AF-0089', name:'Toyota Innova (Fleet)', category:'Vehicles', status:'maintenance', dept:'Admin', location:'HQ — Basement Parking', condition:'Fair', bookable:true, serial:'TI-CR-2019', acquired:'2019-03-05', cost:'₹12,40,000'},
-    {tag:'AF-0203', name:'Herman Miller Aeron', category:'Furniture', status:'lost', dept:'Sales', location:'Unknown', condition:'—', bookable:false, serial:'HM-AR-559', acquired:'2021-12-01', cost:'₹68,000'},
-    {tag:'AF-0011', name:'Site Safety Harness Set', category:'Equipment', status:'retired', dept:'Operations', location:'Warehouse 2', condition:'Worn', bookable:false, serial:'SSH-330', acquired:'2018-04-18', cost:'₹6,500'},
-    {tag:'AF-0198', name:'HP LaserJet Pro Printer', category:'Electronics', status:'available', dept:'Finance', location:'HQ — Floor 2', condition:'Good', bookable:false, serial:'HPLJ-9012', acquired:'2024-02-28', cost:'₹22,900'},
-    {tag:'AF-0301', name:'Canon EOS R6', category:'Electronics', status:'allocated', dept:'Marketing', location:'HQ — Floor 4', condition:'Excellent', bookable:false, serial:'CEO-R6-771', acquired:'2026-06-01', cost:'₹2,15,000', holder:'Rahul Verma'},
-    {tag:'AF-0044', name:'Standing Desk', category:'Furniture', status:'allocated', dept:'Engineering', location:'HQ — Floor 2', condition:'Good', bookable:false, serial:'SD-2201', acquired:'2025-03-11', cost:'₹19,800', holder:'Ananya Rao'},
-  ];
-
-  let allocations = [
-    {tag:'AF-0114', name:'MacBook Pro 14"', holder:'Priya Sharma', type:'Employee', dept:'Design', allocatedOn:'2025-01-15', expectedReturn:'2025-07-15', status:'overdue'},
-    {tag:'AF-0056', name:'Ergonomic Office Chair', holder:'HR Department', type:'Department', dept:'HR', allocatedOn:'2024-10-02', expectedReturn:'—', status:'ontime'},
-    {tag:'AF-0301', name:'Canon EOS R6', holder:'Rahul Verma', type:'Employee', dept:'Marketing', allocatedOn:'2026-06-01', expectedReturn:'2026-07-20', status:'ontime'},
-    {tag:'AF-0044', name:'Standing Desk', holder:'Ananya Rao', type:'Employee', dept:'Engineering', allocatedOn:'2025-03-11', expectedReturn:'2025-09-11', status:'overdue'},
-  ];
-
-  const STATUS_LABEL = {
-    available:'Available', allocated:'Allocated', reserved:'Reserved',
-    maintenance:'Under Maintenance', lost:'Lost', retired:'Retired', disposed:'Disposed',
-  };
-
-  /*Small helpers*/
-  function badge(status){
-    return `<span class="badge badge-${status}">${STATUS_LABEL[status]}</span>`;
-  }
-  function toast(msg, isError){
-    const stack = document.getElementById('toastStack');
-    const el = document.createElement('div');
-    el.className = 'toast' + (isError ? ' error' : '');
-    el.textContent = msg;
-    stack.appendChild(el);
-    setTimeout(()=> el.remove(), 3600);
-  }
-  function openOverlay(id){ document.getElementById(id).classList.add('open'); }
-  function closeOverlay(id){ document.getElementById(id).classList.remove('open'); }
-  document.querySelectorAll('[data-close]').forEach(btn=>{
-    btn.addEventListener('click', ()=> closeOverlay(btn.getAttribute('data-close')));
-  });
-  document.querySelectorAll('.overlay').forEach(ov=>{
-    ov.addEventListener('click', (e)=>{ if(e.target === ov) ov.classList.remove('open'); });
-  });
-
-  function nextTag(){
-    const nums = assets.map(a => parseInt(a.tag.split('-')[1], 10)).filter(n=>!isNaN(n));
-    const next = Math.max(0, ...nums) + 1;
-    return 'AF-' + String(next).padStart(4,'0');
-  }
-
-  /*Tabs */
-  document.querySelectorAll('.tab-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
-    });
-  });
-
-  /*DIRECTORY (Screen 4) */
-  const directoryBody = document.getElementById('directoryBody');
-  const directoryEmpty = document.getElementById('directoryEmpty');
-
-  function renderDirectory(){
-    const status = document.getElementById('filterStatus').value;
-    const category = document.getElementById('filterCategory').value;
-    const dept = document.getElementById('filterDept').value;
-    const q = document.getElementById('searchDirectory').value.trim().toLowerCase();
-
-    const rows = assets.filter(a =>
-      (!status || a.status === status) &&
-      (!category || a.category === category) &&
-      (!dept || a.dept === dept) &&
-      (!q || a.tag.toLowerCase().includes(q) || a.name.toLowerCase().includes(q) || (a.serial||'').toLowerCase().includes(q))
-    );
-
-    document.getElementById('countDirectory').textContent = assets.length;
-    directoryEmpty.classList.toggle('hidden', rows.length > 0);
-
-    directoryBody.innerHTML = rows.map((a, i) => `
-      <tr data-tag="${a.tag}">
-        <td><span class="tag-chip">${a.tag}</span></td>
-        <td class="cell-primary">${a.name}</td>
-        <td class="cell-dim">${a.category}</td>
-        <td>${badge(a.status)}</td>
-        <td class="cell-dim">${a.dept}</td>
-        <td class="cell-dim">${a.location}</td>
-        <td class="cell-dim">${a.condition}</td>
-        <td class="cell-dim">${a.bookable ? 'Yes' : 'No'}</td>
-      </tr>
-    `).join('');
-  }
-
-  ['filterStatus','filterCategory','filterDept'].forEach(id=>
-    document.getElementById(id).addEventListener('change', renderDirectory));
-  document.getElementById('searchDirectory').addEventListener('input', renderDirectory);
-
-  directoryBody.addEventListener('click', (e)=>{
-    const tr = e.target.closest('tr');
-    if(!tr) return;
-    openAssetDetail(tr.dataset.tag);
-  });
-
-  /*Register Asset */
-  document.getElementById('btnRegisterAsset').addEventListener('click', ()=>{
-    document.getElementById('formRegister').reset();
-    document.getElementById('nextTagPreview').textContent = nextTag();
-    openOverlay('overlayRegister');
-  });
-
-  document.getElementById('btnSubmitRegister').addEventListener('click', ()=>{
-    const name = document.getElementById('regName').value.trim();
-    const category = document.getElementById('regCategory').value;
-    if(!name || !category){ toast('Name and category are required.', true); return; }
-
-    const tag = nextTag();
-    assets.unshift({
-      tag, name, category,
-      status:'available',
-      dept: document.getElementById('regDept').value,
-      location: document.getElementById('regLocation').value || '—',
-      condition: document.getElementById('regCondition').value,
-      bookable: document.getElementById('regBookable').checked,
-      serial: document.getElementById('regSerial').value || '—',
-      acquired: document.getElementById('regDate').value || '—',
-      cost: document.getElementById('regCost').value || '—',
-    });
-    closeOverlay('overlayRegister');
-    renderDirectory();
-    toast(`Asset ${tag} registered as Available.`);
-  });
-
-  /* Asset Detail Drawer*/
-  let activeDetailTag = null;
-
-  function openAssetDetail(tag){
-    const a = assets.find(x => x.tag === tag);
-    if(!a) return;
-    activeDetailTag = tag;
-
-    document.getElementById('detailTag').textContent = a.tag;
-    document.getElementById('detailTitle').textContent = a.name;
-    document.getElementById('detailStatusSelect').value = a.status;
-
-    document.getElementById('detailGrid').innerHTML = `
-      <div class="detail-field"><div class="k">Category</div><div class="v">${a.category}</div></div>
-      <div class="detail-field"><div class="k">Department</div><div class="v">${a.dept}</div></div>
-      <div class="detail-field"><div class="k">Serial Number</div><div class="v" style="font-family:var(--font-mono);font-size:0.78rem;">${a.serial}</div></div>
-      <div class="detail-field"><div class="k">Location</div><div class="v">${a.location}</div></div>
-      <div class="detail-field"><div class="k">Condition</div><div class="v">${a.condition}</div></div>
-      <div class="detail-field"><div class="k">Bookable</div><div class="v">${a.bookable ? 'Yes' : 'No'}</div></div>
-      <div class="detail-field"><div class="k">Acquired</div><div class="v">${a.acquired}</div></div>
-      <div class="detail-field"><div class="k">Acquisition Cost</div><div class="v">${a.cost}</div></div>
-    `;
-
-    const allocHtml = a.holder
-      ? `<div class="history-item"><div class="history-dot"></div><div><div class="t">Currently held by ${a.holder}</div><div class="m">${a.dept} · since ${a.acquired}</div></div></div>`
-      : `<div class="history-item"><div class="history-dot" style="background:var(--text-faint);"></div><div><div class="t">No active allocation</div><div class="m">This asset is not currently held by anyone</div></div></div>`;
-    document.getElementById('detailAllocHistory').innerHTML = allocHtml;
-
-    document.getElementById('detailMaintHistory').innerHTML = `
-      <div class="history-item"><div class="history-dot" style="background:var(--warn);"></div><div><div class="t">Routine inspection — Resolved</div><div class="m">Closed 3 months ago</div></div></div>
-    `;
-
-    openOverlay('overlayDetail');
-  }
-
-  document.getElementById('btnSaveStatus').addEventListener('click', ()=>{
-    const a = assets.find(x => x.tag === activeDetailTag);
-    if(!a) return;
-    a.status = document.getElementById('detailStatusSelect').value;
-    if(a.status !== 'allocated') a.holder = undefined;
-    closeOverlay('overlayDetail');
-    renderDirectory();
-    toast(`${a.tag} status updated to ${STATUS_LABEL[a.status]}.`);
-  });
-
-  /* ALLOCATION & TRANSFER (Screen 5)*/
-  const allocationBody = document.getElementById('allocationBody');
-
-  function renderAllocations(){
-    const statusF = document.getElementById('filterAllocStatus').value;
-    const deptF = document.getElementById('filterAllocDept').value;
-
-    const rows = allocations.filter(al =>
-      (!statusF || al.status === statusF) &&
-      (!deptF || al.dept === deptF)
-    );
-
-    document.getElementById('countAllocation').textContent = allocations.length;
-
-    allocationBody.innerHTML = rows.map(al => `
-      <tr class="${al.status === 'overdue' ? 'row-overdue' : ''}" data-tag="${al.tag}">
-        <td><span class="tag-chip">${al.tag}</span><div class="cell-dim mt-8" style="font-size:0.76rem;">${al.name}</div></td>
-        <td class="cell-primary">${al.holder}</td>
-        <td class="cell-dim">${al.type}</td>
-        <td class="cell-dim">${al.allocatedOn}</td>
-        <td class="cell-dim">${al.expectedReturn}</td>
-        <td>${al.status === 'overdue' ? '<span class="badge badge-overdue">Overdue</span>' : '<span class="badge badge-ontime">On time</span>'}</td>
-        <td>
-          <div class="cell-actions">
-            <button class="btn btn-ghost btn-sm" data-action="transfer" data-roles="admin,asset-manager,department-head,employee">Transfer</button>
-            <button class="btn btn-ghost btn-sm" data-action="return" data-roles="admin,asset-manager,department-head">Return</button>
-          </div>
-        </td>
-      </tr>
-    `).join('');
-    window.AssetFlowRole && window.AssetFlowRole.applyRole();
-  }
-
-  ['filterAllocStatus','filterAllocDept'].forEach(id=>
-    document.getElementById(id).addEventListener('change', renderAllocations));
-
-  allocationBody.addEventListener('click', (e)=>{
-    const btn = e.target.closest('button[data-action]');
-    if(!btn) return;
-    const tr = e.target.closest('tr');
-    const al = allocations.find(x => x.tag === tr.dataset.tag);
-    if(btn.dataset.action === 'transfer') openTransfer(al);
-    if(btn.dataset.action === 'return') openReturn(al);
-  });
-
-  /*Allocate Asset (with conflict handling)*/
-  document.getElementById('btnAllocateAsset').addEventListener('click', ()=>{
-    const sel = document.getElementById('allocAsset');
-    sel.innerHTML = assets.map(a =>
-      `<option value="${a.tag}">${a.tag} — ${a.name}${a.status !== 'available' ? ' (Allocated — unavailable)' : ''}</option>`
-    ).join('');
-    checkAllocateConflict();
-    openOverlay('overlayAllocate');
-  });
-
-  document.getElementById('allocAsset').addEventListener('change', checkAllocateConflict);
-
-  function checkAllocateConflict(){
-    const tag = document.getElementById('allocAsset').value;
-    const a = assets.find(x => x.tag === tag);
-    const conflict = a && a.status === 'allocated';
-    document.getElementById('conflictAlert').classList.toggle('hidden', !conflict);
-    document.getElementById('allocateFormFields').classList.toggle('hidden', conflict);
-    document.getElementById('btnSubmitAllocate').disabled = !!conflict;
-    if(conflict){
-      document.getElementById('conflictText').textContent =
-        `${a.tag} — ${a.name} is currently held by ${a.holder}. You can't allocate it again while it's held; request a transfer instead.`;
-    }
-  }
-
-  document.getElementById('btnSubmitAllocate').addEventListener('click', ()=>{
-    const tag = document.getElementById('allocAsset').value;
-    const a = assets.find(x => x.tag === tag);
-    if(!a || a.status === 'allocated') return;
-
-    const holderText = document.getElementById('allocHolder').value;
-    const [holderName, holderDept] = holderText.split(' — ');
-    const isDept = document.querySelector('input[name="allocType"]:checked').value === 'department';
-
-    a.status = 'allocated';
-    a.holder = holderName;
-
-    allocations.unshift({
-      tag: a.tag, name: a.name, holder: holderName,
-      type: isDept ? 'Department' : 'Employee',
-      dept: holderDept || a.dept,
-      allocatedOn: new Date().toISOString().slice(0,10),
-      expectedReturn: document.getElementById('allocReturn').value || '—',
-      status: 'ontime',
-    });
-
-    closeOverlay('overlayAllocate');
-    renderDirectory();
-    renderAllocations();
-    toast(`${a.tag} allocated to ${holderName}.`);
-  });
-
-  /* Transfer Request*/
-  let activeTransfer = null;
-
-  function openTransfer(al){
-    activeTransfer = al;
-    document.getElementById('transferSubtitle').textContent =
-      `${al.tag} — ${al.name}, currently with ${al.holder}`;
-    setStep('requested');
-    document.getElementById('transferPendingNote').classList.remove('hidden');
-    document.getElementById('btnSubmitTransfer').classList.remove('hidden');
-    openOverlay('overlayTransfer');
-  }
-
-  function setStep(stage){
-    const order = ['requested','approved','reallocated'];
-    const idx = order.indexOf(stage);
-    order.forEach((s, i)=>{
-      const el = document.getElementById('step' + s[0].toUpperCase() + s.slice(1));
-      el.classList.remove('done','current');
-      if(i < idx) el.classList.add('done');
-      else if(i === idx) el.classList.add('current');
-    });
-  }
-
-  document.getElementById('btnRequestTransferInstead').addEventListener('click', ()=>{
-    const tag = document.getElementById('allocAsset').value;
-    const al = allocations.find(x => x.tag === tag);
-    closeOverlay('overlayAllocate');
-    if(al) openTransfer(al);
-  });
-
-  document.getElementById('btnSubmitTransfer').addEventListener('click', ()=>{
-    setStep('approved');
-    document.getElementById('transferPendingNote').classList.remove('hidden');
-    toast('Transfer request submitted — pending approval.');
-  });
-
-  document.getElementById('btnApproveTransfer').addEventListener('click', ()=>{
-    if(!activeTransfer) return;
-    setStep('reallocated');
-    document.getElementById('transferPendingNote').classList.add('hidden');
-
-    const newHolderText = document.getElementById('transferTo').value;
-    const [newHolder] = newHolderText.split(' — ');
-    const a = assets.find(x => x.tag === activeTransfer.tag);
-    if(a) a.holder = newHolder;
-    activeTransfer.holder = newHolder;
-    activeTransfer.allocatedOn = new Date().toISOString().slice(0,10);
-    activeTransfer.status = 'ontime';
-
-    renderDirectory();
-    renderAllocations();
-    toast(`${activeTransfer.tag} approved and re-allocated to ${newHolder}.`);
-    setTimeout(()=> closeOverlay('overlayTransfer'), 900);
-  });
-
-  /*  Return Asset */
-  let activeReturn = null;
-
-  function openReturn(al){
-    activeReturn = al;
-    document.getElementById('returnSubtitle').textContent =
-      `${al.tag} — ${al.name}, held by ${al.holder}`;
-    openOverlay('overlayReturn');
-  }
-
-  document.getElementById('btnSubmitReturn').addEventListener('click', ()=>{
-    if(!activeReturn) return;
-    const a = assets.find(x => x.tag === activeReturn.tag);
-    if(a){ a.status = 'available'; a.holder = undefined; a.condition = document.getElementById('returnCondition').value; }
-    allocations = allocations.filter(x => x !== activeReturn);
-
-    closeOverlay('overlayReturn');
-    renderDirectory();
-    renderAllocations();
-    toast(`${activeReturn.tag} marked returned — status set to Available.`);
-  });
-
-  /* Init */
-  renderDirectory();
-  renderAllocations();
-})();
+// Your application initialization scripts...
 </script>
 </body>
 </html>
