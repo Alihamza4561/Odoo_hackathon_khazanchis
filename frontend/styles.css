@@ -1,12 +1,10 @@
-/* ============================================================
-   AssetFlow — shared stylesheet
-   Design tokens + layout shell + reusable components
-   ============================================================ */
+/* AssetFlow — shared stylesheet
+   Design tokens + layout shell + reusable components */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root{
-  /* -- surfaces -- */
+  /*surfaces*/
   --bg:        #0a0c10;
   --bg-soft:   #0d1015;
   --panel:     #12151b;
@@ -15,17 +13,17 @@
   --border:    #262c36;
   --border-soft: #1b2028;
 
-  /* -- text -- */
+  /*text*/
   --text:      #e8eaee;
   --text-dim:  #9aa3af;
   --text-faint:#5f6773;
 
-  /* -- brand -- */
+  /* brand*/
   --brand:        #6c8cff;
   --brand-dim:    #4c63b8;
   --brand-tint:   rgba(108,140,255,0.12);
 
-  /* -- status -- */
+  /*status*/
   --ok:        #34d399;
   --ok-tint:   rgba(52,211,153,0.12);
   --warn:      #fbbf24;
@@ -39,12 +37,12 @@
   --slate:     #94a3b8;
   --slate-tint: rgba(148,163,184,0.12);
 
-  /* -- type -- */
+  /*type*/
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* -- geometry -- */
+  /*geometry*/
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
@@ -91,16 +89,14 @@ img{max-width:100%;display:block;}
 ::-webkit-scrollbar-thumb{background:var(--panel-3);border-radius:8px;border:2px solid var(--bg);}
 ::-webkit-scrollbar-thumb:hover{background:var(--border);}
 
-/* ============================================================
-   App shell
-   ============================================================ */
+/* App shell */
 .app-shell{
   display:grid;
   grid-template-columns: var(--sidebar-w) 1fr;
   min-height:100vh;
 }
 
-/* ---------- sidebar ---------- */
+/* sidebar  */
 .sidebar{
   background:var(--bg-soft);
   border-right:1px solid var(--border-soft);
@@ -176,10 +172,10 @@ img{max-width:100%;display:block;}
 .sidebar-user-name{font-size:0.82rem;font-weight:600;color:var(--text);}
 .sidebar-user-role{font-size:0.7rem;color:var(--text-faint);}
 
-/* ---------- main column ---------- */
+/* main column */
 .main-col{display:flex;flex-direction:column;min-width:0;}
 
-/* ---------- topbar ---------- */
+/*  topbar  */
 .topbar{
   height:var(--topbar-h);
   display:flex;align-items:center;gap:16px;
@@ -237,9 +233,7 @@ img{max-width:100%;display:block;}
   border:2px solid var(--bg-soft);
 }
 
-/* ============================================================
-   Page shell
-   ============================================================ */
+/* Page shell */
 .page{padding:26px 28px 60px;}
 .page-head{
   display:flex;align-items:flex-end;justify-content:space-between;
@@ -253,7 +247,7 @@ img{max-width:100%;display:block;}
 .page-title{font-size:1.6rem;}
 .page-sub{color:var(--text-dim);font-size:0.86rem;margin-top:6px;max-width:560px;}
 
-/* ---------- tabs ---------- */
+/* tabs  */
 .tabbar{
   display:flex;gap:4px;
   border-bottom:1px solid var(--border-soft);
@@ -278,7 +272,7 @@ img{max-width:100%;display:block;}
 .tab-panel{display:none;}
 .tab-panel.active{display:block;}
 
-/* ---------- buttons ---------- */
+/* buttons */
 .btn{
   display:inline-flex;align-items:center;gap:8px;
   padding:9px 16px;border-radius:var(--radius-sm);
@@ -298,7 +292,7 @@ img{max-width:100%;display:block;}
 .btn-block{width:100%;justify-content:center;}
 .btn:disabled{opacity:0.45;cursor:not-allowed;}
 
-/* ---------- filter bar ---------- */
+/* filter bar  */
 .filter-bar{
   display:flex;align-items:center;gap:10px;flex-wrap:wrap;
   margin-bottom:16px;
@@ -312,7 +306,7 @@ img{max-width:100%;display:block;}
 .select:focus,.input:focus{border-color:var(--brand);}
 .filter-bar .input{min-width:200px;flex:1;max-width:280px;}
 
-/* ---------- KPI strip ---------- */
+/*  KPI strip */
 .kpi-strip{
   display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
   margin-bottom:22px;
@@ -327,10 +321,9 @@ img{max-width:100%;display:block;}
 .kpi-card.danger .kpi-num{color:var(--danger);}
 .kpi-card.ok .kpi-num{color:var(--ok);}
 
-/* ============================================================
+/* 
    Asset tag chip — signature element
-   Mimics a physical asset tag: mono type + a punched hole notch
-   ============================================================ */
+   Mimics a physical asset tag: mono type + a punched hole notch */
 .tag-chip{
   display:inline-flex;align-items:center;gap:6px;
   font-family:var(--font-mono);font-size:0.74rem;font-weight:500;
@@ -348,7 +341,7 @@ img{max-width:100%;display:block;}
 }
 .tag-chip.muted{color:var(--text-dim);}
 
-/* ---------- badges / status pills ---------- */
+/*  badges / status pills */
 .badge{
   display:inline-flex;align-items:center;gap:5px;
   padding:3px 9px;border-radius:999px;
@@ -367,7 +360,7 @@ img{max-width:100%;display:block;}
 .badge-ontime{background:var(--ok-tint);color:var(--ok);}
 .badge-pending{background:var(--warn-tint);color:var(--warn);}
 
-/* ---------- table ---------- */
+/*  table  */
 .table-wrap{
   background:var(--panel);border:1px solid var(--border-soft);
   border-radius:var(--radius-md);overflow:hidden;
@@ -393,7 +386,7 @@ tbody tr.row-overdue:hover{background:rgba(248,113,113,0.09);}
 .cell-actions{display:flex;gap:6px;justify-content:flex-end;}
 .table-empty{padding:60px 20px;text-align:center;color:var(--text-faint);font-size:0.84rem;}
 
-/* ---------- modal / drawer ---------- */
+/*  modal / drawer*/
 .overlay{
   position:fixed;inset:0;background:rgba(6,7,10,0.7);
   backdrop-filter:blur(2px);
@@ -443,7 +436,7 @@ tbody tr.row-overdue:hover{background:rgba(248,113,113,0.09);}
   position:sticky;bottom:0;background:var(--panel);
 }
 
-/* ---------- form ---------- */
+/*  form */
 .form-row{margin-bottom:16px;}
 .form-row label{
   display:block;font-size:0.74rem;font-weight:600;color:var(--text-dim);
@@ -462,7 +455,7 @@ tbody tr.row-overdue:hover{background:rgba(248,113,113,0.09);}
 .checkbox-row input{width:auto;}
 .checkbox-row label{margin:0;font-size:0.8rem;color:var(--text);font-weight:500;}
 
-/* ---------- alert / conflict card ---------- */
+/*  alert / conflict card  */
 .alert{
   border-radius:var(--radius-md);
   padding:14px 16px;
@@ -477,7 +470,7 @@ tbody tr.row-overdue:hover{background:rgba(248,113,113,0.09);}
 .alert-info{background:var(--info-tint);border-color:rgba(56,189,248,0.3);color:var(--info);}
 .alert-info .alert-body{color:#a9c9d6;}
 
-/* ---------- stepper ---------- */
+/* stepper */
 .stepper{display:flex;align-items:center;margin:6px 0 20px;}
 .step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;}
 .step-dot{
@@ -499,7 +492,7 @@ tbody tr.row-overdue:hover{background:rgba(248,113,113,0.09);}
 .step.current .step-label{color:var(--text);}
 .step.done .step-label{color:var(--text-dim);}
 
-/* ---------- detail drawer bits ---------- */
+/*  detail drawer bits */
 .drawer-tag{font-size:0.86rem;}
 .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
 .detail-field{}
@@ -518,7 +511,7 @@ tbody tr.row-overdue:hover{background:rgba(248,113,113,0.09);}
 .history-item .t{font-size:0.82rem;color:var(--text);font-weight:500;}
 .history-item .m{font-size:0.74rem;color:var(--text-faint);margin-top:2px;}
 
-/* ---------- toast ---------- */
+/* toast */
 .toast-stack{
   position:fixed;bottom:24px;right:24px;z-index:200;
   display:flex;flex-direction:column;gap:10px;
@@ -535,7 +528,7 @@ tbody tr.row-overdue:hover{background:rgba(248,113,113,0.09);}
 .toast.error{border-left-color:var(--danger);}
 @keyframes toast-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 
-/* ---------- utility ---------- */
+/* utility */
 .flex{display:flex;align-items:center;}
 .gap-8{gap:8px;}
 .gap-12{gap:12px;}
@@ -543,9 +536,7 @@ tbody tr.row-overdue:hover{background:rgba(248,113,113,0.09);}
 .mt-16{margin-top:16px;}
 .hidden{display:none !important;}
 
-/* ============================================================
-   Responsive
-   ============================================================ */
+/* Responsive*/
 @media (max-width:1080px){
   .kpi-strip{grid-template-columns:repeat(2,1fr);}
   .form-grid{grid-template-columns:1fr;}
