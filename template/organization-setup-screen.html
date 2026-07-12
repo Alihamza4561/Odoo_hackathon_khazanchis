@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AssetFlow Management</title>
+    <link rel="stylesheet" href="organization-setup-screen.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">AssetFlow</div>
+    </header>
+    <hr class="header-divider">
+
+    <main class="content-container">
+        <div class="card-wrapper">
+            <div class="controls-row">
+                <div class="tabs-group">
+                    <button class="btn tab-btn" data-target="departments">Departments</button>
+                    <button class="btn tab-btn" data-target="categories">Categories</button>
+                    <button class="btn tab-btn" data-target="employees">Employee</button>
+                </div>
+            </div>
+
+            <div class="dynamic-content-area" id="dynamicContentArea">
+                
+                <section id="departments" class="content-section hidden">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Department</th>
+                                    <th>Head</th>
+                                    <th>Parent Department</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="departmentsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="categories" class="content-section hidden">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="employees" class="content-section hidden">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Employee Name</th>
+                                    <th>Department</th>
+                                    <th>Designation</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeesTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div id="footerActionZone" class="footer-action-zone hidden">
+                    <hr class="section-divider">
+                    <div class="create-btn-wrapper">
+                        <button class="btn create-btn" id="createBtn">+ Create</button>
+                    </div>
+                </div>
+
+                <div id="formContainer" class="form-wrapper hidden"></div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="organization-setup-screen.js"></script>
+</body>
+</html>
