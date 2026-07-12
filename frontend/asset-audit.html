@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Asset Audit - AssetFlow</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="js/api.js" defer></script>
+  <script src="js/role-handler.js" defer></script>
+  <script src="js/audit.js" defer></script>
+</head>
+<body>
+  <!-- Shared Navbar -->
+  <div id="navbar">
+    <!-- Copy-paste from components/navbar.html -->
+  </div>
+
+  <div class="container">
+    <!-- Shared Sidebar -->
+    <div id="sidebar">
+      <!-- Copy-paste from components/sidebar.html -->
+    </div>
+
+    <main class="content">
+      <h2>Asset Audit Cycles</h2>
+      <button id="createCycleBtn" class="btn-primary">Create Audit Cycle</button>
+
+      <!-- Table of audit cycles -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="auditCycleTable">
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
+
+      <!-- Modal for creating new cycle -->
+      <div id="createCycleModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Create Audit Cycle</h3>
+          <label>Name <input type="text" id="cycleName"></label>
+          <label>Department <input type="text" id="cycleDept"></label>
+          <label>Start Date <input type="date" id="cycleStart"></label>
+          <label>End Date <input type="date" id="cycleEnd"></label>
+          <div class="modal-actions">
+            <button id="cancelCreate" class="btn-secondary">Cancel</button>
+            <button id="saveCreate" class="btn-primary">Create</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal for assets in cycle -->
+      <div id="assetsModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Assets in Cycle</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Asset Tag</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody id="assetsTable">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+          <div class="modal-actions">
+            <button id="closeAssets" class="btn-secondary">Close</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
