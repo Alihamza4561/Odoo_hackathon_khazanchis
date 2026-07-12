@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
-from models import db
-from routes.core import core_bp
+from model import db
+from route.core import core_bp
 import os
 from dotenv import load_dotenv
 
