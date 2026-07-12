@@ -80,10 +80,16 @@
     approveMaintenanceRequest: (id) => request(`/maintenance/${id}/approve`, { method: 'POST' }),
 
     //audits 
-    listAuditCycles: () => request('/audits'),
-    createAuditCycle: (data) => request('/audits', { method: 'POST', body: JSON.stringify(data) }),
+    // --- audits (Screen 8) ---
+listAuditCycles: () => request('/audits'),
+createAuditCycle: (data) => request('/audits', { method: 'POST', body: JSON.stringify(data) }),
 
-    //  notifications 
+// NEW: list entries for a given cycle
+listAuditEntries: (params) => request(`/audit-entries${qs(params)}`),
+updateAuditEntry: (id, status) =>
+  request(`/audit-entries/${id}`, { method: 'PATCH', body: JSON.stringify({ status }) }),
+closeAuditCycle: (id) =>
+  request(`/audits/${id}/close`, { method: 'POST' }),
     listNotifications: () => request('/notifications'),
   };
 })();
